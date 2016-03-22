@@ -31,7 +31,8 @@ VERSION = '0.1.0'
 
 install_requires = [
     'wishbone>=2.1.1',
-    'pyjq==2.0.0'
+    'pyjq==2.0.0',
+    'gevent_inotifyx==0.1.1'
 ]
 
 try:
