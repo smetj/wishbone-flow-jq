@@ -13,8 +13,8 @@
 
     Version: 0.1.0
 
-    Evaluates a data structure against jq expressions.
-    --------------------------------------------------
+    A Wishbone flow module for JSON pattern matching using jq expressions
+    ---------------------------------------------------------------------
 
 
         Evalutes (JSON) data structures against a set of jq expressions to decide
