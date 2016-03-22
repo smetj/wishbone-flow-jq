@@ -91,7 +91,7 @@ SCHEMA_DISK = {
 
 class JQ(Actor):
 
-    '''**Evaluates a data structure against jq expressions.**
+    '''**JSON pattern matching using jq expressions.**
 
     Evalutes (JSON) data structures against a set of jq expressions to decide
     which queue to forward the event to.
