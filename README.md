@@ -7,14 +7,15 @@
     Build composable event pipeline servers with minimal effort.
 
 
+
     ================
     wishbone.flow.jq
     ================
 
     Version: 0.1.0
 
-    A Wishbone flow module for JSON pattern matching using jq expressions
-    ---------------------------------------------------------------------
+    JSON pattern matching using jq expressions.
+    -------------------------------------------
 
 
         Evalutes (JSON) data structures against a set of jq expressions to decide

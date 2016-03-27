@@ -24,9 +24,9 @@
 
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-import sys
+import sys, os
 
-PROJECT = 'wishbone_flow_jq'
+PROJECT = 'wishbone-flow-jq'
 VERSION = '0.1.0'
 
 install_requires = [
@@ -36,10 +36,16 @@ install_requires = [
 ]
 
 try:
-    with open('README.rst', 'rt') as f:
-        long_description = f.read()
-except IOError:
-    long_description = ''
+    if os.path.isfile("README.rst"):
+        with open('README.rst', 'rt') as f:
+            long_description = f.read()
+    elif os.path.isfile("README.md"):
+        import pypandoc
+        long_description = pypandoc.convert('README.md', 'rst')
+except Exception as err:
+    print "Check whether README.rst or README.md exists."
+    sys.exit(1)
+
 
 
 class PyTest(TestCommand):
