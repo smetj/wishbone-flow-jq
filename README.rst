@@ -1,20 +1,23 @@
+::
+
               __       __    __
     .--.--.--|__.-----|  |--|  |--.-----.-----.-----.
     |  |  |  |  |__ --|     |  _  |  _  |     |  -__|
     |________|__|_____|__|__|_____|_____|__|__|_____|
-                                       version 2.1.2
+                                       version 2.2.0
 
     Build composable event pipeline servers with minimal effort.
+
 
 
     ================
     wishbone.flow.jq
     ================
 
-    Version: 0.1.0
+    Version: 1.0.0
 
-    A Wishbone flow module for JSON pattern matching using jq expressions
-    ---------------------------------------------------------------------
+    JSON pattern matching using jq expressions.
+    -------------------------------------------
 
 
         Evalutes (JSON) data structures against a set of jq expressions to decide
@@ -132,7 +135,7 @@
         Parameters:
 
             - selection(str)("@data")
-               |  The part of the event to submit externally.
+               |  The root part of the event to evaluate.
                |  Use an empty string to refer to the complete event.
 
             - conditions(dict)([])

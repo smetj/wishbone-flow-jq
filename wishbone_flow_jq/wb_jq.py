@@ -208,7 +208,7 @@ class JQ(Actor):
     Parameters:
 
         - selection(str)("@data")
-           |  The part of the event to submit externally.
+           |  The root part of the event to evaluate.
            |  Use an empty string to refer to the complete event.
 
         - conditions(dict)([])
@@ -298,13 +298,17 @@ class JQ(Actor):
 
                     if isinstance(result, bool) or result is None:
                         if result:
+                            self.logging.debug("Condition '%s' matches '%s'." % (condition["name"], data))
+                            self.logging.debug("Condition '%s' matches." % (condition["name"]))
                             matched = True
                             e = event.clone()
-                            e.set("@tmp.%s.rule" % (self.name), condition["name"])
+                            e.set(condition["name"], "@tmp.%s.rule" % (self.name))
                             if "payload" in condition:
                                 for key, value in condition["payload"].iteritems():
                                     e.set(value, key)
                             self.submit(e, self.pool.getQueue(condition["queue"]))
+                        else:
+                            self.logging.debug("Condition '%s' DOES NOT match '%s'." % (condition["name"], data))
                     else:
                         self.logging.error("Jq expression '%s' does not return a bool therefor it is skipped." % (condition["name"]))
                 else:
