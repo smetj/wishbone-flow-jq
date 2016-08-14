@@ -23,7 +23,7 @@
 #
 
 from wishbone.event import Event
-from wishbone.module.wb_jq import JQ
+from wishbone_flow_jq import JQ
 from wishbone.actor import ActorConfig
 from wishbone.utils.test import getter
 import shutil
