@@ -27,10 +27,10 @@ from setuptools.command.test import test as TestCommand
 import sys
 
 PROJECT = 'wishbone-flow-jq'
-VERSION = '1.0.1'
+VERSION = '2.0.0'
 
 install_requires = [
-    'wishbone>=2.1.1',
+    'wishbone>=2.4.0',
     'pyjq==2.0.0',
 ]
 
