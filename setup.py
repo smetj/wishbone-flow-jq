@@ -30,7 +30,7 @@ PROJECT = 'wishbone-flow-jq'
 VERSION = '2.0.0'
 
 install_requires = [
-    'wishbone>=2.4.0',
+    'wishbone>=2.3.2',
     'pyjq==2.0.0',
 ]
 
