@@ -3,7 +3,7 @@
 #
 #  setup.py
 #
-#  Copyright 2016 Jelle Smet <development@smetj.net>
+#  Copyright 2017 Jelle Smet <development@smetj.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ VERSION = '1.0.1'
 install_requires = [
     'wishbone>=2.1.1',
     'pyjq==2.0.0',
-    'gevent_inotifyx==0.1.1'
 ]
 
 try:

@@ -3,7 +3,7 @@
 #
 #  test_module_jq.py
 #
-#  Copyright 2016 Jelle Smet <development@smetj.net>
+#  Copyright 2017 Jelle Smet <development@smetj.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ from wishbone.event import Event
 from wishbone_flow_jq import JQ
 from wishbone.actor import ActorConfig
 from wishbone.utils.test import getter
+from gevent import sleep
 import shutil
 import os
 import yaml
@@ -140,8 +141,9 @@ def test_module_jq_valid_jq_expression_no_bool():
 
 
 def test_module_jq_disk_rule_basic():
-
+    #smetj
     condition = {
+        "name": "test",
         "expression": '.greeting | test("hello")',
         "queue": "outbox"
     }
@@ -149,12 +151,15 @@ def test_module_jq_disk_rule_basic():
     dumpFile(condition)
 
     actor_config = ActorConfig('jq', 100, 1, {}, "")
-    jq = JQ(actor_config, location="./test_rules")
+    jq = JQ(actor_config)
 
     jq.pool.queue.inbox.disableFallThrough()
+    jq.pool.queue.inotify_events.disableFallThrough()
     jq.pool.createQueue("outbox")
     jq.pool.queue.outbox.disableFallThrough()
     jq.start()
+    jq.pool.queue.inotify_events.put(Event({"path": os.path.abspath("./test_rules/rule_1.yaml"), "inotify_type": "WISHBONE_INIT"}))
+    sleep(1)
 
     e = Event({"greeting": "hello"})
 
@@ -165,25 +170,34 @@ def test_module_jq_disk_rule_basic():
 
 def test_module_jq_disk_rule_reload():
 
-    condition = {
-        "expression": '.greeting | test("hello")',
-        "queue": "outbox"
-    }
-
-    dumpFile(condition)
-
     actor_config = ActorConfig('jq', 100, 1, {}, "")
-    jq = JQ(actor_config, location="./test_rules")
+    jq = JQ(actor_config)
 
     jq.pool.queue.inbox.disableFallThrough()
     jq.pool.queue.no_match.disableFallThrough()
+    jq.pool.queue.inotify_events.disableFallThrough()
     jq.start()
 
+    #Load file version 1
+    condition = {
+        "name": "test",
+        "expression": '.greeting | test("hi")',
+        "queue": "outbox"
+    }
+    dumpFile(condition)
+    jq.pool.queue.inotify_events.put(Event({"path": os.path.abspath("./test_rules/rule_1.yaml"), "inotify_type": "WISHBONE_INIT"}))
+
+    sleep(1)
+
+    #Load file version 2
     condition2 = {
-        "expression": '.greeting | test( "hi")',
+        "name": "test",
+        "expression": '.greeting | test( "hello")',
         "queue": "outbox"
     }
     dumpFile(condition2)
+
+    jq.pool.queue.inotify_events.put(Event({"path": os.path.abspath("./test_rules/rule_1.yaml"), "inotify_type": "WISHBONE_INIT"}))
 
     e = Event({"greeting": "hi"})
 
